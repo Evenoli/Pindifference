@@ -221,6 +221,7 @@
   <ItemGroup>
     <Compile Include="Assets\BallSpawner.cs" />
     <Compile Include="Assets\Bumper.cs" />
+    <Compile Include="Assets\PointManager.cs" />
     <Compile Include="Assets\Scripts\FlipperControl.cs" />
     <Compile Include="Assets\Scripts\LauncherControl.cs" />
   </ItemGroup>
