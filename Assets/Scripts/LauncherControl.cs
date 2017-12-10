@@ -11,13 +11,11 @@ public class LauncherControl : MonoBehaviour {
     public float m_MaxPullback;
     public float m_pullbackSpeed;
 
-    private float m_startZ;
 	private float m_startLocalY;
 
     // Use this for initialization
     void Start () {
 		m_springJoint = GetComponent<SpringJoint>();
-        m_startZ = transform.localPosition.z;
 		m_startLocalY = transform.localPosition.y;
 	}
 

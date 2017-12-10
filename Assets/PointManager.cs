@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour {
 
-    public enum InteractionType { BUMPER, PANEL };
+    public enum InteractionType { BUMPER, PANEL, GATE };
 
     public int m_startingBallsRem;
     public int m_curBallsRem;
@@ -15,6 +15,7 @@ public class PointManager : MonoBehaviour {
 
     public const int bumperScore = 50;
     public const int panelScore = 100;
+    public const int gateScore = 100;
 
     public Text scoreText;
     public Text BallsRemText;
@@ -36,6 +37,10 @@ public class PointManager : MonoBehaviour {
 
             case InteractionType.PANEL:
                 m_curScore += panelScore * m_multiplyer;
+                break;
+
+            case InteractionType.GATE:
+                m_curScore += gateScore * m_multiplyer;
                 break;
         }
     }
