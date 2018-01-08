@@ -1,28 +1,76 @@
 fileFormatVersion: 2
-guid: 0a24eb2a1b012a249955462dc05b1b4e
-timeCreated: 1513189965
+guid: bff5737f1e76ad44cbbaa54225a3327d
+timeCreated: 1515419514
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cylinder_001
+    100000: Circle
+    100002: Circle_001
+    100004: Circle_002
+    100006: Circle_003
+    100008: Circle_004
+    100010: Circle_005
+    100012: Circle_007
+    100014: Cube
+    100016: Cube_001
+    100018: Cube_002
+    100020: //RootNode
+    100022: Cube_003
+    400000: Circle
+    400002: Circle_001
+    400004: Circle_002
+    400006: Circle_003
+    400008: Circle_004
+    400010: Circle_005
+    400012: Circle_007
+    400014: Cube
+    400016: Cube_001
+    400018: Cube_002
+    400020: //RootNode
+    400022: Cube_003
+    2100000: unnamed
+    2300000: Circle
+    2300002: Circle_001
+    2300004: Circle_002
+    2300006: Circle_003
+    2300008: Circle_004
+    2300010: Circle_005
+    2300012: Circle_007
+    2300014: Cube
+    2300016: Cube_001
+    2300018: Cube_002
+    2300020: Cube_003
+    3300000: Circle
+    3300002: Circle_001
+    3300004: Circle_002
+    3300006: Circle_003
+    3300008: Circle_004
+    3300010: Circle_005
+    3300012: Circle_007
+    3300014: Cube
+    3300016: Cube_001
+    3300018: Cube_002
+    3300020: Cube_003
+    4300000: Circle_007
+    4300002: Circle_005
+    4300004: Cube_002
+    4300006: Cube_001
+    4300008: Cube
+    4300010: Circle_004
+    4300012: Circle_003
+    4300014: Circle_002
+    4300016: Circle_001
+    4300018: Circle
+    4300020: Cube_003
     7400000: Default Take
     9500000: //RootNode
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: unnamed
-    second: {fileID: 2100000, guid: beba01f119f258e469fac2478ce08909, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -60,6 +108,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
