@@ -12,7 +12,9 @@ public class BoostGate : MonoBehaviour {
         GameObject obj = other.gameObject;
         if (obj.tag == "Ball")
         {
-            obj.GetComponent<Rigidbody>().velocity += transform.TransformDirection(new Vector3(0, m_BoostSpeed, 0));
+            Vector3 vel = obj.GetComponent<Rigidbody>().velocity;
+            if(vel.y < m_BoostSpeed)
+                obj.GetComponent<Rigidbody>().velocity = transform.TransformDirection(new Vector3(0, m_BoostSpeed, 0));
 
         }
     }
