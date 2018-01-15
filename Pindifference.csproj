@@ -292,6 +292,7 @@
     <Compile Include="Assets\Scripts\LauncherControl.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PanelCluster.cs" />
+    <Compile Include="Assets\Scripts\PipeBox.cs" />
     <Compile Include="Assets\Scripts\PointManager.cs" />
   </ItemGroup>
   <ItemGroup>
