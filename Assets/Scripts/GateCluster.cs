@@ -28,7 +28,7 @@ public class GateCluster : MonoBehaviour {
 
         if (allGatesActive)
         {
-            m_pointMan.IncreaseMultiplyer();
+            m_pointMan.GetPowerup();
             foreach (Gate g in gates)
             {
                 g.ResetGate();

@@ -21,6 +21,7 @@ public class PipeBox : MonoBehaviour {
 
     private bool m_HoldingBall;
     private GameObject m_HeldBall;
+    public GameObject m_HeldBallPos;
 
     private bool m_SelectingDirection;
 
@@ -41,6 +42,7 @@ public class PipeBox : MonoBehaviour {
         if (m_SelectingDirection && m_HoldingBall)
         {
             m_HoldCount++;
+            m_HeldBall.transform.localPosition = m_HeldBallPos.transform.localPosition;
 
             //Fast random highlighting of arrows
             if(m_HoldCount < (m_HoldTime / 2))
@@ -117,7 +119,9 @@ public class PipeBox : MonoBehaviour {
         else if(m_HoldingBall && !m_SelectingDirection)
         {
             --m_LaunchCountdown;
-            if(m_LaunchCountdown <= 0) //Launch ball(s)
+            m_HeldBall.transform.localPosition = m_HeldBallPos.transform.localPosition;
+
+            if (m_LaunchCountdown <= 0) //Launch ball(s)
             {
                 m_HoldingBall = false;
                 foreach(int dir in m_SelectedDirections)
@@ -128,6 +132,8 @@ public class PipeBox : MonoBehaviour {
                     newBall.GetComponent<Rigidbody>().velocity = trns.TransformDirection(new Vector3(0, m_LaunchSpeed, 0));
                 }
                 HighlightTriangle(new List<int>()); // Clear highlights
+                transform.root.gameObject.GetComponent<BallManager>().RemoveBall(m_HeldBall); //Destroy old ball
+                GameObject.Destroy(m_HeldBall);
             }
 
             
@@ -143,8 +149,11 @@ public class PipeBox : MonoBehaviour {
             obj.transform.position = m_LaunchDirections[0].transform.position;
             m_HoldingBall = true;
             m_SelectingDirection = true;
-            GameObject.Destroy(obj);
+            m_HeldBall = obj;
+            m_HeldBall.transform.position = m_HeldBallPos.transform.position;
             m_HoldCount = 0;
+            m_PointMan.AddToScore(PointManager.InteractionType.PIPEBOX);
+            m_PointMan.GetPowerup();
         }
     }
 

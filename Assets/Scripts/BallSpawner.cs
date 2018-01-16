@@ -17,15 +17,20 @@ public class BallSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis(inputName) == 1 && !m_axisPressed) { 
-			GameObject newBall = Instantiate (ballPrefab);
-			newBall.transform.localPosition = transform.localPosition;
-			newBall.transform.localScale = new Vector3 (2, 2, 2);
+        if (Input.GetAxis(inputName) == 1 && !m_axisPressed) {
+            SpawnBall();
             m_axisPressed = true;
 		}
 
         if (Input.GetAxis(inputName) == 0)
             m_axisPressed = false;
 
+    }
+
+    public void SpawnBall()
+    {
+        GameObject newBall = Instantiate(ballPrefab);
+        newBall.transform.position = transform.position ;
+        newBall.transform.localScale = new Vector3(2, 2, 2);
     }
 }

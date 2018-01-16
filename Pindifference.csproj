@@ -282,18 +282,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BallBin.cs" />
+    <Compile Include="Assets\Scripts\BallManager.cs" />
     <Compile Include="Assets\Scripts\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\BoostGate.cs" />
     <Compile Include="Assets\Scripts\Bumper.cs" />
     <Compile Include="Assets\Scripts\CornerBumper.cs" />
     <Compile Include="Assets\Scripts\FlipperControl.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gate.cs" />
     <Compile Include="Assets\Scripts\GateCluster.cs" />
     <Compile Include="Assets\Scripts\LauncherControl.cs" />
+    <Compile Include="Assets\Scripts\Pair.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PanelCluster.cs" />
     <Compile Include="Assets\Scripts\PipeBox.cs" />
     <Compile Include="Assets\Scripts\PointManager.cs" />
+    <Compile Include="Assets\Scripts\PowerupControl.cs" />
+    <Compile Include="Assets\Scripts\PowerupDisplay.cs" />
+    <Compile Include="Assets\Scripts\PowerupManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\StanderNoCull.shader" />

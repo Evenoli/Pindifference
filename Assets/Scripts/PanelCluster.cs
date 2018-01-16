@@ -26,7 +26,7 @@ public class PanelCluster : MonoBehaviour {
 
         if(allPanelsDown)
         {
-            m_pointMan.IncreaseMultiplyer();
+            m_pointMan.GetPowerup();
             foreach (Panel p in panels)
             {
                 p.Reset();
