@@ -10,7 +10,7 @@ public class PointManager : MonoBehaviour {
     public int m_startingBallsRem;
     public int m_curBallsRem;
 
-    public PowerupManager m_PowerMan;
+    private PowerupManager m_PowerMan;
 
     private int m_curScore;
     private int m_multiplyer;
