@@ -8,6 +8,8 @@ public class CornerBumper : MonoBehaviour {
     public float maxMagnitude;
     public float minBumperPower;
 
+    public GameObject m_BumperBody;
+
     public Color flashCol;
     private Color initialCol;
     public float flashResetRate;
@@ -22,7 +24,7 @@ public class CornerBumper : MonoBehaviour {
     {
         isFlashing = false;
         mat = gameObject.GetComponent<Renderer>().material;
-        bodyMat = transform.parent.GetComponent<Renderer>().material;
+        bodyMat = m_BumperBody.GetComponent<Renderer>().material;
         initialCol = mat.color;
     }
 

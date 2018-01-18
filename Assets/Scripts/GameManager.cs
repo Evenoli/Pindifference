@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public GameObject[] m_PlayerTables;
     public float m_GameLength; //In Seconds
@@ -22,15 +23,25 @@ public class GameManager : MonoBehaviour {
     public GameObject m_RestartCommand;
     public Text m_GameTimer;
 
-	// Use this for initialization
-	void Start () {
+    public int m_SloMoDuration;
+    private int m_SloMoTimer;
+    private bool m_SloMoActive;
+
+    public float m_SloMoSpeed;
+
+    // Use this for initialization
+    void Start()
+    {
         Time.timeScale = 0;
+        m_SloMoTimer = 0;
         m_GameStarting = false;
         m_GameInProgress = false;
+        m_SloMoActive = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!m_GameInProgress && !m_GameStarting)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -50,13 +61,13 @@ public class GameManager : MonoBehaviour {
                 m_CountdownTimer = 0;
             }
         }
-        else if(m_GameStarting)
+        else if (m_GameStarting)
         {
             ++m_CountdownTimer;
             if (m_CountdownTimer % 50 == 0)
                 --m_Countdown;
             m_GameTimer.text = m_Countdown.ToString();
-            if(m_Countdown == 0)
+            if (m_Countdown == 0)
             {
                 m_GameStarting = false;
                 m_GameInProgress = true;
@@ -65,12 +76,12 @@ public class GameManager : MonoBehaviour {
                 Time.timeScale = 1;
             }
         }
-        else if(m_GameInProgress)
+        else if (m_GameInProgress)
         {
             m_GameTimeRem = m_GameLength - (Time.time - m_GameStartTime);
             m_GameTimer.text = FormatTime(m_GameTimeRem);
-            
-            if(m_GameTimeRem <= 0)
+
+            if (m_GameTimeRem <= 0)
             {
                 m_GameInProgress = false;
                 Time.timeScale = 0;
@@ -90,13 +101,30 @@ public class GameManager : MonoBehaviour {
                 m_RestartCommand.SetActive(true);
             }
         }
-	}
+
+        if(m_SloMoActive)
+        {
+            ++m_SloMoTimer;
+            if(m_SloMoTimer >= m_SloMoDuration)
+            {
+                m_SloMoActive = false;
+                Time.timeScale = 1;
+            }
+        }
+    }
 
     private string FormatTime(float time)
     {
-        int mins = (int) time / 60;
-        int secs = (int) time % 60;
+        int mins = (int)time / 60;
+        int secs = (int)time % 60;
 
         return string.Format("{0:00} : {1:00}", mins, secs);
+    }
+
+    public void ActivateSloMo()
+    {
+        m_SloMoTimer = 0;
+        m_SloMoActive = true;
+        Time.timeScale = m_SloMoSpeed;
     }
 }

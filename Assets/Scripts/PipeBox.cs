@@ -29,12 +29,20 @@ public class PipeBox : MonoBehaviour {
     private int m_LaunchCountdown;
     public int m_LaunchTime;
 
+    private int m_resetTime = 5;
+    private int m_ResetTimer;
+    private bool m_resetting;
+
+    private int m_BallLaunchQueueCount;
+
     // Use this for initialization
     void Start () {
         m_PointMan = transform.root.gameObject.GetComponent<PointManager>();
         m_DefaultTriangleCol = m_DirectionTriangles[0].GetComponent<Renderer>().material.color;
         m_SelectingDirection = false;
         m_HoldingBall = false;
+        m_resetting = false;
+        m_BallLaunchQueueCount = 0;
     }
 	
 	// Update is called once per frame
@@ -42,7 +50,7 @@ public class PipeBox : MonoBehaviour {
         if (m_SelectingDirection && m_HoldingBall)
         {
             m_HoldCount++;
-            m_HeldBall.transform.localPosition = m_HeldBallPos.transform.localPosition;
+            m_HeldBall.transform.position = m_HeldBallPos.transform.position;
 
             //Fast random highlighting of arrows
             if(m_HoldCount < (m_HoldTime / 2))
@@ -119,7 +127,7 @@ public class PipeBox : MonoBehaviour {
         else if(m_HoldingBall && !m_SelectingDirection)
         {
             --m_LaunchCountdown;
-            m_HeldBall.transform.localPosition = m_HeldBallPos.transform.localPosition;
+            m_HeldBall.transform.position = m_HeldBallPos.transform.position;
 
             if (m_LaunchCountdown <= 0) //Launch ball(s)
             {
@@ -132,12 +140,37 @@ public class PipeBox : MonoBehaviour {
                     newBall.GetComponent<Rigidbody>().velocity = trns.TransformDirection(new Vector3(0, m_LaunchSpeed, 0));
                 }
                 HighlightTriangle(new List<int>()); // Clear highlights
-                transform.root.gameObject.GetComponent<BallManager>().RemoveBall(m_HeldBall); //Destroy old ball
-                GameObject.Destroy(m_HeldBall);
+                m_ResetTimer = 0;
+                m_resetting = true;
             }
 
             
         }
+        else if(m_resetting)
+        {
+            // Wait a few frames to destroy old ball to avoid a new one being spawned in the launcher 
+            ++m_ResetTimer;
+            if(m_ResetTimer >= m_resetTime)
+            {
+                m_resetting = false;
+                if (m_BallLaunchQueueCount == 0)
+                {
+                    transform.root.gameObject.GetComponent<BallManager>().RemoveBall(m_HeldBall); //Destroy old ball, unless we have balls in queue
+                    GameObject.Destroy(m_HeldBall);
+                }
+                else
+                {
+                    m_HoldingBall = true;
+                    m_SelectingDirection = true;
+                    m_HeldBall.transform.position = m_HeldBallPos.transform.position;
+                    m_HoldCount = 0;
+                    m_PointMan.AddToScore(PointManager.InteractionType.PIPEBOX);
+                    m_PointMan.GetPowerup();
+                    --m_BallLaunchQueueCount;
+                }
+            }
+        }
+
 
     }
 
@@ -146,14 +179,23 @@ public class PipeBox : MonoBehaviour {
         GameObject obj = other.gameObject;
         if (obj.tag == "Ball")
         {
-            obj.transform.position = m_LaunchDirections[0].transform.position;
-            m_HoldingBall = true;
-            m_SelectingDirection = true;
-            m_HeldBall = obj;
-            m_HeldBall.transform.position = m_HeldBallPos.transform.position;
-            m_HoldCount = 0;
-            m_PointMan.AddToScore(PointManager.InteractionType.PIPEBOX);
-            m_PointMan.GetPowerup();
+            if (!(m_HoldingBall || m_SelectingDirection || m_resetting))
+                {
+                obj.transform.position = m_LaunchDirections[0].transform.position;
+                m_HoldingBall = true;
+                m_SelectingDirection = true;
+                m_HeldBall = obj;
+                m_HeldBall.transform.position = m_HeldBallPos.transform.position;
+                m_HoldCount = 0;
+                m_PointMan.AddToScore(PointManager.InteractionType.PIPEBOX);
+                m_PointMan.GetPowerup();
+            }
+            else
+            {
+                ++m_BallLaunchQueueCount;
+                transform.root.gameObject.GetComponent<BallManager>().RemoveBall(obj); //Destroy new ball and add to queue
+                GameObject.Destroy(obj);
+            }
         }
     }
 
