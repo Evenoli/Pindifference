@@ -9,10 +9,15 @@ public class BallManager : MonoBehaviour {
     private List<GameObject> m_BallsList;
 
     public BallSpawner m_Spawner;
+	// Frames to wait after spawning a new ball before doing another
+	// Avoids double spawns
+	private int m_SpawnCooldown = 10; 
+	private int m_CooldownCounter;
 
     // Use this for initialization
     void Start() {
         m_BallsList = new List<GameObject>();
+		m_CooldownCounter = 0;
     }
 
     private void Update()

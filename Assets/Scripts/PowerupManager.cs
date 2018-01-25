@@ -29,6 +29,9 @@ public class PowerupManager : MonoBehaviour {
 
     public GameManager m_GameMan;
 
+	public PowerAnnouncer m_PowerAnnouncer;
+	public PowerAnnouncer m_OppPowerAnnouncer;
+
     // Use this for initialization
     void Start () {
         m_Recharging = false;
@@ -122,48 +125,53 @@ public class PowerupManager : MonoBehaviour {
 
         switch (power)
         {
-            case PowerUps.SMALLBALLS:
-            case PowerUps.BIGBALLS:
-            case PowerUps.CLUSTERBALLS:
-            case PowerUps.BOUNCYBALLS:
-            case PowerUps.UNBOUNCYBALLS:
-                List<GameObject> oppBalls = m_OpponentTable.GetComponent<BallManager>().GetBalls();
-                if (oppBalls.Count > 0)
-                {
-                    GameObject[] ballArr = new GameObject[oppBalls.Count];
-                    oppBalls.CopyTo(ballArr);
+		case PowerUps.SMALLBALLS:
+		case PowerUps.BIGBALLS:
+		case PowerUps.CLUSTERBALLS:
+		case PowerUps.BOUNCYBALLS:
+		case PowerUps.UNBOUNCYBALLS:
+			List<GameObject> oppBalls = m_OpponentTable.GetComponent<BallManager> ().GetBalls ();
+			m_OppPowerAnnouncer.AnnouncePower (power);
+            if (oppBalls.Count > 0)
+            {
+                GameObject[] ballArr = new GameObject[oppBalls.Count];
+                oppBalls.CopyTo(ballArr);
 
-                    foreach (GameObject ball in ballArr)
-                        ball.GetComponent<PowerupControl>().ApplyMod(power);
-                }
-                break;
+                foreach (GameObject ball in ballArr)
+                    ball.GetComponent<PowerupControl>().ApplyMod(power);
+            }
+            break;
 
-            case PowerUps.SLOMO:
-                m_GameMan.ActivateSloMo();
-                break;
+		case PowerUps.SLOMO:
+			m_GameMan.ActivateSloMo ();
+			m_OppPowerAnnouncer.AnnouncePower (power);
+			m_PowerAnnouncer.AnnouncePower (power);
+            break;
 
-            case PowerUps.FLIPPERSWAP:
-                FlipperControl[] oppLeftFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_LeftFlippers;
-                FlipperControl[] oppRightFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_RightFlippers;
+        case PowerUps.FLIPPERSWAP:
+            FlipperControl[] oppLeftFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_LeftFlippers;
+            FlipperControl[] oppRightFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_RightFlippers;
 
-                foreach(FlipperControl lFlip in oppLeftFlippers)
-                {
-                    StringBuilder sb = new StringBuilder(lFlip.inputName);
-                    sb[0] = 'R';
-                    lFlip.inputName = sb.ToString();
-                }
+			m_OppPowerAnnouncer.AnnouncePower (power);
 
-                foreach (FlipperControl rFlip in oppRightFlippers)
-                {
-                    StringBuilder sb = new StringBuilder(rFlip.inputName);
-                    sb[0] = 'L';
-                    rFlip.inputName = sb.ToString();
-                }
+            foreach(FlipperControl lFlip in oppLeftFlippers)
+            {
+                StringBuilder sb = new StringBuilder(lFlip.inputName);
+                sb[0] = 'R';
+                lFlip.inputName = sb.ToString();
+            }
 
-                m_FlippersSwapped = true;
-                m_FlipperSwapTimer = 0;
+            foreach (FlipperControl rFlip in oppRightFlippers)
+            {
+                StringBuilder sb = new StringBuilder(rFlip.inputName);
+                sb[0] = 'L';
+                rFlip.inputName = sb.ToString();
+            }
 
-                break;
+            m_FlippersSwapped = true;
+            m_FlipperSwapTimer = 0;
+
+            break;
 
         }
 
