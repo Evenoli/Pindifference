@@ -10,6 +10,7 @@ public class PipeBox : MonoBehaviour {
     public GameObject[] m_DirectionTriangles;
     public GameObject[] m_LaunchDirections;
     public GameObject m_BallPrefab;
+    public Material m_BallMat;
 
     public Color m_TriangleHightlightCol;
     private Color m_DefaultTriangleCol;
@@ -136,6 +137,7 @@ public class PipeBox : MonoBehaviour {
                 {
                     Transform trns = m_LaunchDirections[dir].transform;
                     GameObject newBall = Object.Instantiate(m_BallPrefab);
+                    newBall.GetComponent<Renderer>().material = m_BallMat;
                     newBall.transform.position = trns.position;
                     newBall.GetComponent<Rigidbody>().velocity = trns.TransformDirection(new Vector3(0, m_LaunchSpeed, 0));
                 }
@@ -188,7 +190,7 @@ public class PipeBox : MonoBehaviour {
                 m_HeldBall.transform.position = m_HeldBallPos.transform.position;
                 m_HoldCount = 0;
                 m_PointMan.AddToScore(PointManager.InteractionType.PIPEBOX);
-                m_PointMan.GetPowerup();
+                //m_PointMan.GetPowerup();
             }
             else
             {

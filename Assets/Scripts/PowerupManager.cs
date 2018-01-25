@@ -17,6 +17,8 @@ public class PowerupManager : MonoBehaviour {
 
     public PowerupDisplay m_PowerDisp;
 
+    public PowerQueue m_PowerQueueDisp;
+
     public int m_FlipperSwapDuration;
     private int m_FlipperSwapTimer;
     private bool m_FlippersSwapped;
@@ -28,6 +30,9 @@ public class PowerupManager : MonoBehaviour {
     public FlipperControl[] m_RightFlippers;
 
     public GameManager m_GameMan;
+
+	public PowerAnnouncer m_PowerAnnouncer;
+	public PowerAnnouncer m_OppPowerAnnouncer;
 
     // Use this for initialization
     void Start () {
@@ -85,7 +90,7 @@ public class PowerupManager : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            AddPowerToQueue(PowerUps.FLIPPERSWAP);
+            AddRandomPowerToQueue();
         }
 	}
 
@@ -95,6 +100,8 @@ public class PowerupManager : MonoBehaviour {
 
         if (m_PowerQueue.Count == 1)
             m_PowerDisp.SetDisplayActive(power);
+
+        m_PowerQueueDisp.UpdateQueueDisplay(m_PowerQueue);
     }
 
     public void AddRandomPowerToQueue()
@@ -105,6 +112,8 @@ public class PowerupManager : MonoBehaviour {
 
         if (m_PowerQueue.Count == 1)
             m_PowerDisp.SetDisplayActive((PowerUps)selection);
+
+        m_PowerQueueDisp.UpdateQueueDisplay(m_PowerQueue);
     }
 
     private void UsePowerup()
@@ -122,52 +131,59 @@ public class PowerupManager : MonoBehaviour {
 
         switch (power)
         {
-            case PowerUps.SMALLBALLS:
-            case PowerUps.BIGBALLS:
-            case PowerUps.CLUSTERBALLS:
-            case PowerUps.BOUNCYBALLS:
-            case PowerUps.UNBOUNCYBALLS:
-                List<GameObject> oppBalls = m_OpponentTable.GetComponent<BallManager>().GetBalls();
-                if (oppBalls.Count > 0)
-                {
-                    GameObject[] ballArr = new GameObject[oppBalls.Count];
-                    oppBalls.CopyTo(ballArr);
+		case PowerUps.SMALLBALLS:
+		case PowerUps.BIGBALLS:
+		case PowerUps.CLUSTERBALLS:
+		case PowerUps.BOUNCYBALLS:
+		case PowerUps.UNBOUNCYBALLS:
+			List<GameObject> oppBalls = m_OpponentTable.GetComponent<BallManager> ().GetBalls ();
+			m_OppPowerAnnouncer.AnnouncePower (power);
+            if (oppBalls.Count > 0)
+            {
+                GameObject[] ballArr = new GameObject[oppBalls.Count];
+                oppBalls.CopyTo(ballArr);
 
-                    foreach (GameObject ball in ballArr)
-                        ball.GetComponent<PowerupControl>().ApplyMod(power);
-                }
-                break;
+                foreach (GameObject ball in ballArr)
+                    ball.GetComponent<PowerupControl>().ApplyMod(power);
+            }
+            break;
 
-            case PowerUps.SLOMO:
-                m_GameMan.ActivateSloMo();
-                break;
+		case PowerUps.SLOMO:
+			m_GameMan.ActivateSloMo ();
+			m_OppPowerAnnouncer.AnnouncePower (power);
+			m_PowerAnnouncer.AnnouncePower (power);
+            break;
 
-            case PowerUps.FLIPPERSWAP:
-                FlipperControl[] oppLeftFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_LeftFlippers;
-                FlipperControl[] oppRightFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_RightFlippers;
+        case PowerUps.FLIPPERSWAP:
+            FlipperControl[] oppLeftFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_LeftFlippers;
+            FlipperControl[] oppRightFlippers = m_OpponentTable.GetComponent<PowerupManager>().m_RightFlippers;
 
-                foreach(FlipperControl lFlip in oppLeftFlippers)
-                {
-                    StringBuilder sb = new StringBuilder(lFlip.inputName);
-                    sb[0] = 'R';
-                    lFlip.inputName = sb.ToString();
-                }
+			m_OppPowerAnnouncer.AnnouncePower (power);
 
-                foreach (FlipperControl rFlip in oppRightFlippers)
-                {
-                    StringBuilder sb = new StringBuilder(rFlip.inputName);
-                    sb[0] = 'L';
-                    rFlip.inputName = sb.ToString();
-                }
+            foreach(FlipperControl lFlip in oppLeftFlippers)
+            {
+                StringBuilder sb = new StringBuilder(lFlip.inputName);
+                sb[0] = 'R';
+                lFlip.inputName = sb.ToString();
+            }
 
-                m_FlippersSwapped = true;
-                m_FlipperSwapTimer = 0;
+            foreach (FlipperControl rFlip in oppRightFlippers)
+            {
+                StringBuilder sb = new StringBuilder(rFlip.inputName);
+                sb[0] = 'L';
+                rFlip.inputName = sb.ToString();
+            }
 
-                break;
+            m_FlippersSwapped = true;
+            m_FlipperSwapTimer = 0;
+
+            break;
 
         }
 
         m_Recharging = true;
         m_RechargeTimer = 0;
+
+        m_PowerQueueDisp.UpdateQueueDisplay(m_PowerQueue);
     }
 }

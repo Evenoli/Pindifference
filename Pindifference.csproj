@@ -299,6 +299,9 @@
     <Compile Include="Assets\Scripts\PipeBox.cs" />
     <Compile Include="Assets\Scripts\PointManager.cs" />
     <Compile Include="Assets\Scripts\PowerAnnouncer.cs" />
+    <Compile Include="Assets\Scripts\PowerQueue.cs" />
+    <Compile Include="Assets\Scripts\PowerQueueArrow.cs" />
+    <Compile Include="Assets\Scripts\PowerQueueDisplay.cs" />
     <Compile Include="Assets\Scripts\PowerupControl.cs" />
     <Compile Include="Assets\Scripts\PowerupDisplay.cs" />
     <Compile Include="Assets\Scripts\PowerupManager.cs" />

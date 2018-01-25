@@ -6,6 +6,7 @@ public class BallSpawner : MonoBehaviour {
 
 	public GameObject ballPrefab;
     public string inputName;
+    public Material m_BallMat;
 
     private bool m_axisPressed;
 
@@ -32,5 +33,6 @@ public class BallSpawner : MonoBehaviour {
         GameObject newBall = Instantiate(ballPrefab);
         newBall.transform.position = transform.position ;
         newBall.transform.localScale = new Vector3(2, 2, 2);
+        newBall.GetComponent<Renderer>().material = m_BallMat;
     }
 }
