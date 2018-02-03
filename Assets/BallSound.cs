@@ -13,11 +13,15 @@ public class BallSound : MonoBehaviour {
     public float m_MinPitch;
     public float m_MaxPitch;
 
+    private bool m_BeingDestroyed;
+
 	// Use this for initialization
 	void Start () {
         m_RB = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
-	}
+        m_BeingDestroyed = false;
+
+    }
 
     private void FixedUpdate()
     {
@@ -27,7 +31,7 @@ public class BallSound : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        if(!m_AudioSource.isPlaying && m_speed >= 0.1f && collision.gameObject.tag == "Floor")
+        if (!m_AudioSource.isPlaying && m_speed >= 0.1f && collision.gameObject.tag == "Floor" && m_AudioSource.isActiveAndEnabled)
             m_AudioSource.Play();
         else if (m_AudioSource.isPlaying && m_speed < 0.1f && collision.gameObject.tag == "Floor")
             m_AudioSource.Pause();
@@ -39,4 +43,8 @@ public class BallSound : MonoBehaviour {
             m_AudioSource.Pause();
     }
 
+    void OnDestroy()
+    {
+        m_AudioSource.Pause();
+    }
 }

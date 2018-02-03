@@ -13,11 +13,23 @@ public class FlipperControl : MonoBehaviour {
 
     public string inputName;
 
+    private AudioSource m_FlipperUpClip;
+    private AudioSource m_FlipperDownClip;
+
+    private bool m_AxisPressed;
+
     // Use this for initialization
     void Start () {
         hinge = GetComponent<HingeJoint>();
         hinge.useSpring = true;
-	}
+
+        AudioSource[] clips = GetComponents<AudioSource>();
+        m_FlipperUpClip = clips[0];
+        m_FlipperDownClip = clips[1];
+
+        m_AxisPressed = false;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,10 +40,20 @@ public class FlipperControl : MonoBehaviour {
         if(Input.GetAxis(inputName) == 1)
         {
             spring.targetPosition = pressedPos;
+            if(!m_AxisPressed)
+            {
+                m_AxisPressed = true;
+                m_FlipperUpClip.Play();
+            }
         }
         else
         {
             spring.targetPosition = restPos;
+            if(m_AxisPressed)
+            {
+                m_AxisPressed = false;
+                m_FlipperDownClip.Play();
+            }
         }
 
         hinge.spring = spring;

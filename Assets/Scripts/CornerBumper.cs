@@ -18,6 +18,8 @@ public class CornerBumper : MonoBehaviour {
     private Material mat;
     private Material bodyMat;
 
+    private AudioSource m_BumperSound;
+
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,8 @@ public class CornerBumper : MonoBehaviour {
         mat = gameObject.GetComponent<Renderer>().material;
         bodyMat = m_BumperBody.GetComponent<Renderer>().material;
         initialCol = mat.color;
+
+        m_BumperSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -51,6 +55,9 @@ public class CornerBumper : MonoBehaviour {
             Vector3 bounceDirection = cp.normal * Mathf.Max(1, bounce.magnitude/2);
 
             ballRigidBdy.velocity = Vector3.ClampMagnitude((bounce * bumperPowerScale + bounceDirection * minBumperPower), maxMagnitude);
+
+            m_BumperSound.Play();
+
             Flash();
         }
     }

@@ -14,7 +14,9 @@ public class Bumper : MonoBehaviour {
     private bool isFlashing;
     private float flashLerpFactor;
     private Material mat;
-    
+
+    private AudioSource m_BumperSound;
+
     private PointManager m_pointMan;
 
     // Use this for initialization
@@ -23,6 +25,7 @@ public class Bumper : MonoBehaviour {
         mat = gameObject.GetComponent<Renderer>().material;
         initialCol = mat.color;
         m_pointMan = transform.root.gameObject.GetComponent<PointManager>();
+        m_BumperSound = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -46,6 +49,7 @@ public class Bumper : MonoBehaviour {
             Vector3 bounceDirection = bounce.normalized;
             ballRigidBdy.velocity = Vector3.ClampMagnitude((bounce * bumperPowerScale + bounceDirection * minBumperPower), maxMagnitude);
             Flash();
+            m_BumperSound.Play();
             m_pointMan.AddToScore(PointManager.InteractionType.BUMPER);
         }
     }

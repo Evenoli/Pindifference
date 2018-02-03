@@ -21,6 +21,8 @@ public class Panel : MonoBehaviour {
     private float flashLerpFactor;
     private Material mat;
 
+    private AudioSource m_PanelSound;
+
     private PointManager m_pointMan;
 
     // Use this for initialization
@@ -36,6 +38,8 @@ public class Panel : MonoBehaviour {
         mat = gameObject.GetComponent<Renderer>().material;
         initialCol = mat.color;
         m_pointMan = transform.root.gameObject.GetComponent<PointManager>();
+
+        m_PanelSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -51,13 +55,12 @@ public class Panel : MonoBehaviour {
         {
             float y= transform.localPosition.y;
 
-            if (m_up)
+            if (!m_up)
             {
                 y -= m_dropSpeed;
                 if (y <= m_minHeight)
                 {
                     y = m_minHeight;
-                    m_up = false;
                     m_collider.enabled = false;
                     m_moving = false;
                 }
@@ -68,7 +71,6 @@ public class Panel : MonoBehaviour {
                 if (y >= m_maxHeight)
                 {
                     y = m_maxHeight;
-                    m_up = true;
                     m_collider.enabled = true;
                     m_moving = false;
                 }
@@ -84,8 +86,10 @@ public class Panel : MonoBehaviour {
         GameObject obj = collision.collider.gameObject;
         if (obj.tag == "Ball")
         {
+            m_up = false;
             m_moving = true;
             Flash();
+            m_PanelSound.Play();
             m_pointMan.AddToScore(PointManager.InteractionType.PANEL);
         }
     }
@@ -98,7 +102,10 @@ public class Panel : MonoBehaviour {
     public void Reset()
     {
         if (!m_up)
+        {
+            m_up = true;
             m_moving = true;
+        }
     }
 
     public void Flash()

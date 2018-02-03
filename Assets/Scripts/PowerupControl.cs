@@ -33,8 +33,8 @@ public class PowerupControl : MonoBehaviour {
                 break;
 
             case PowerupManager.PowerUps.SMALLBALLS:
-                transform.localScale = new Vector3(1, 1, 1);
-                m_ActiveMods.Add(new Pair<PowerupManager.PowerUps, int>(PowerupManager.PowerUps.BIGBALLS, 0));
+                transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                m_ActiveMods.Add(new Pair<PowerupManager.PowerUps, int>(PowerupManager.PowerUps.SMALLBALLS, 0));
                 ++m_SizeModsInUse;
                 break;
 
