@@ -282,9 +282,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BallSound.cs" />
     <Compile Include="Assets\Scripts\BallBin.cs" />
     <Compile Include="Assets\Scripts\BallManager.cs" />
+    <Compile Include="Assets\Scripts\BallSound.cs" />
     <Compile Include="Assets\Scripts\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\BoostGate.cs" />
     <Compile Include="Assets\Scripts\Bumper.cs" />

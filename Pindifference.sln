@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pindifference", "Assembly-CSharp.csproj", "{943BE45F-9421-D589-9064-3F1A748BF930}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pindifference", "Pindifference.csproj", "{00334684-FC73-6B55-F624-2202F0A743E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{943BE45F-9421-D589-9064-3F1A748BF930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{943BE45F-9421-D589-9064-3F1A748BF930}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{943BE45F-9421-D589-9064-3F1A748BF930}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{943BE45F-9421-D589-9064-3F1A748BF930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00334684-FC73-6B55-F624-2202F0A743E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00334684-FC73-6B55-F624-2202F0A743E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00334684-FC73-6B55-F624-2202F0A743E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00334684-FC73-6B55-F624-2202F0A743E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
